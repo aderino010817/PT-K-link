@@ -1,0 +1,32 @@
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Thread } from "./Thread";
+import { Likes } from "./Likes";
+import { Replies } from "./Replies";
+import { Followers } from "./Follows";
+
+@Entity({ name: "Transactions" })
+export class Transaction {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  invoiceNumber: string;
+
+  @Column()
+  invoiceDate: date;
+
+  @Column()
+  qty: number;
+
+  @Column({ select: false })
+  totalAmount: number;
+
+  @Column({ nullable: true })
+  totalCount: number;
+
+  @OneToMany(() => Products, (product) => Products.transactions)
+  Products: product[];
+
+  @OneToOne(() => Customers, (customer) => Customers.transactions)
+  Customers: customer[];
+}
